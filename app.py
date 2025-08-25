@@ -9,14 +9,18 @@ from ektraksi import extract_features
 from tensorflow.keras.models import load_model
 from datetime import datetime
 
-app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Needed for session
+from pathlib import Path
 
-# Configuration
-UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+APP_ROOT = Path(__file__).resolve().parent
+UPLOAD_FOLDER = str(APP_ROOT / "static" / "uploads")   # <- path absolut
+PROCESSED_FOLDER = str(APP_ROOT / "static" / "processed")
+(Path(UPLOAD_FOLDER)).mkdir(parents=True, exist_ok=True)
+(Path(PROCESSED_FOLDER)).mkdir(parents=True, exist_ok=True)
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
 
 
 # Prediction mapping dictionary
@@ -30,112 +34,38 @@ PREDICTION_MAPPING = {
     'Sa': ('sonneratia-alba', 'sonneratia_alba')
 }
 
-# Load models and utilities
 model = None
 scaler = None
 le = None
 
 def load_artifacts():
     global model, scaler, le
-    model = load_model('best_model_compressed.h5')
-    with open('scaler.pkl', 'rb') as f:
+    # path absolut ke file artefak
+    model_path = APP_ROOT / "best_model_compressed.h5"
+    scaler_path = APP_ROOT / "scaler.pkl"
+    le_path     = APP_ROOT / "label_encoder.pkl"
+
+    if not model_path.exists():
+        raise FileNotFoundError(f"Model not found: {model_path}")
+    if not scaler_path.exists():
+        raise FileNotFoundError(f"Scaler not found: {scaler_path}")
+    if not le_path.exists():
+        raise FileNotFoundError(f"Label encoder not found: {le_path}")
+
+    model = load_model(str(model_path))
+    with open(scaler_path, "rb") as f:
         scaler = pickle.load(f)
-    with open('label_encoder.pkl', 'rb') as f:
+    with open(le_path, "rb") as f:
         le = pickle.load(f)
 
-# (Keep the exact same extract_features function from your provided code)
-# def extract_features(image_path):
-#     image = cv2.imread(image_path)
-#     if image is None:
-#         return None
+    if scaler is None:
+        raise RuntimeError("Loaded scaler is None")
+    if le is None:
+        raise RuntimeError("Loaded label encoder is None")
 
-#     # --- Shape Features ---
-#     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     _, binary = cv2.threshold(image_gray, 127, 255, cv2.THRESH_BINARY_INV)
-#     kernel = np.ones((5, 5), np.uint8)
-#     binary = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
-#     contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-#     if len(contours) == 0:
-#         return None
-    
-#     leaf_contour = max(contours, key=cv2.contourArea)
-#     points = leaf_contour[:, 0, :]
+# >>> PANGGIL DI SINI (saat modul di-import oleh Gunicorn)
+load_artifacts()
 
-#     # Calculate maximum length (major axis)
-#     max_length = 0
-#     tip = base = None
-#     for i in range(len(points)):
-#         for j in range(i + 1, len(points)):
-#             dist = np.linalg.norm(points[i] - points[j])
-#             if dist > max_length:
-#                 max_length = dist
-#                 tip, base = points[i], points[j]
-
-#     # Calculate width (minor axis) perpendicular to length
-#     dy = base[1] - tip[1]
-#     dx = base[0] - tip[0]
-#     length_slope = dy / dx if dx != 0 else np.inf
-#     width_slope = -1 / length_slope if length_slope not in [0, np.inf] else np.inf
-
-#     max_width = 0
-#     for i in range(len(points)):
-#         for j in range(i + 1, len(points)):
-#             dx = points[j][0] - points[i][0]
-#             dy = points[j][1] - points[i][1]
-#             slope = dy / dx if dx != 0 else np.inf
-#             if abs(slope - width_slope) < 0.2:
-#                 dist = np.linalg.norm(points[i] - points[j])
-#                 if dist > max_width:
-#                     max_width = dist
-
-#     # Calculate all shape features
-#     area = cv2.contourArea(leaf_contour)
-#     perimeter = cv2.arcLength(leaf_contour, True)
-#     aspect_ratio = max_length / max_width if max_width != 0 else 0
-#     circularity = (4 * math.pi * area) / (perimeter**2) if perimeter != 0 else 0
-#     rectangularity = area / (max_length * max_width) if (max_length * max_width) != 0 else 0
-#     diameter = max([np.linalg.norm(p1 - p2) for p1 in points for p2 in points])
-#     # narrow_factor = diameter / max_length if max_length != 0 else 0
-#     # ratio_perim_diam = perimeter / diameter if diameter != 0 else 0
-#     # ratio_perim_lenwidth = perimeter / (max_length + max_width) if (max_length + max_width) != 0 else 0
-
-#     # --- Color Features ---
-#     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-#     hsv = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2HSV)
-#     lower_green = np.array([25, 40, 40])
-#     upper_green = np.array([85, 255, 255])
-#     mask = cv2.inRange(hsv, lower_green, upper_green)
-#     leaf_pixels = hsv[mask > 0]
-#     if len(leaf_pixels) == 0:
-#         return None
-
-#     mean_hsv = np.mean(leaf_pixels, axis=0)  # 3 features (H,S,V)
-#     std_hsv = np.std(leaf_pixels, axis=0)    # 3 features (H,S,V)
-#     hist_hue, _ = np.histogram(leaf_pixels[:, 0], bins=8, range=(0, 180))  # 16 features
-#     hist_hue = hist_hue / hist_hue.sum()
-#     color_features = np.concatenate([mean_hsv, std_hsv, hist_hue])  # 22 color features total
-
-#     # --- Texture Features ---
-#     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     gray_resized = cv2.resize(gray, (128, 128))
-#     angles = [0, np.pi/4, np.pi/2, 3*np.pi/4]
-#     glcm = graycomatrix(gray_resized, distances=[1], angles=angles, levels=256, symmetric=True, normed=True)
-#     props = ['contrast', 'homogeneity']
-#     texture_features = [np.mean(graycoprops(glcm, p)[0]) for p in props]  # 4 features
-#     glcm_sum = np.sum(glcm, axis=3)
-#     glcm_prob = glcm_sum / np.sum(glcm_sum)
-#     entropy = -np.sum(glcm_prob * np.log2(glcm_prob + 1e-10))  # 1 feature
-#     texture_features.append(entropy)  # 5 texture features total
-
-#     # Combine all features (9 shape + 22 color + 5 texture = 36 features)
-#     features = np.concatenate([
-#         [area, perimeter, aspect_ratio, circularity, rectangularity, 
-#          diameter],
-#         color_features,
-#         texture_features
-#     ])
-    
-#     return features 
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -217,28 +147,38 @@ def confirmation():
 def process():
     if 'image_path' not in session:
         return redirect(url_for('detect_home'))
-    
+
     image_path = session['image_path']
-    
-    # Extract features (replace with your actual feature extraction)
-    features = extract_features(image_path)  # This should be your actual function
+
+    # Ambil fitur dari session bila sudah dihitung di /upload
+    features = session.get('features')
     if features is None:
-        return redirect(url_for('detect_home'))
-    
-    # Preprocess image for model (example - adapt to your model)
+        features = extract_features(image_path)
+        if features is None:
+            return redirect(url_for('detect_home'))
+        try:
+            features = features.tolist()
+        except Exception:
+            pass
+
+    features = np.asarray(features, dtype=float)
+
+    # Input gambar untuk cabang CNN (jika model memang butuh)
     img = cv2.imread(image_path)
     img_input = cv2.resize(img, (128, 128)) / 255.0
     img_input = np.expand_dims(img_input, axis=0)
-    
-    # Scale features (example - adapt to your scaler)
-    features_scaled = scaler.transform(features.reshape(1, -1))  # Use your actual scaler
-    
-    # Make prediction (example - adapt to your model)
-    pred = model.predict([img_input, features_scaled])  # Use your actual model
-    
-    # Get confidence and class
+
+    # Pastikan scaler ter-load
+    if scaler is None:
+        abort(500, description="Scaler not loaded")
+
+    features_scaled = scaler.transform(features.reshape(1, -1))
+
+    # Prediksi (hybrid: [image, features])
+    pred = model.predict([img_input, features_scaled], verbose=0)
+
     confidence = float(np.max(pred))
-    pred_class = le.classes_[np.argmax(pred)]  # Use your actual label encoder
+    pred_class = le.classes_[np.argmax(pred)]
     
     # Set threshold for detection
     confidence_threshold = 0.70
@@ -276,6 +216,15 @@ def process():
     session['features'] = features_list
     
     return redirect(url_for('results'))
+
+@app.get("/_health")
+def _health():
+    return {
+        "model_loaded": model is not None,
+        "scaler_loaded": scaler is not None,
+        "le_loaded": le is not None,
+        "upload_dir_exists": Path(UPLOAD_FOLDER).exists()
+    }
 
 
 @app.route('/results')
@@ -701,27 +650,6 @@ def sonneratia_alba():
     }
     return render_template('sonneratia_alba_detail.html', species=species)
 
-# @app.route('/species_detail/<prediction>')
-# def species_detail(prediction):
-#     # Mapping prediksi ke template yang sesuai
-#     species_pages = {
-#         "Avicennia marina": "avicennia_marina.html",
-#         "Avicennia officinalis": "avicennia_officinalis.html",
-#         "Rhizophora apiculata": "rhizophora_apiculata.html",
-#         "Bruguiera gymnorrhiza": "bruguiera_gymnorhiza.html",
-#         "Lumnitzera littorea": "lumnitzera_littorea.html",
-#         "Heritiera littoralis": "heritiera_littoralis.html",
-#         "Sonneratia alba": "sonneratia_alba_detail.html"
-
-#     }
-    
-#     template_name = species_pages.get(prediction)
-    
-#     if not template_name:
-#         abort(404, description="Spesies tidak ditemukan")
-    
-#     return render_template(template_name)
 if __name__ == '__main__':
-    load_artifacts()
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     app.run(debug=True)
