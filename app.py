@@ -37,7 +37,7 @@ le = None
 
 def load_artifacts():
     global model, scaler, le
-    model = load_model('best_model 80 dan 20.h5')
+    model = load_model('best_model_compressed.h5')
     with open('scaler.pkl', 'rb') as f:
         scaler = pickle.load(f)
     with open('label_encoder.pkl', 'rb') as f:
