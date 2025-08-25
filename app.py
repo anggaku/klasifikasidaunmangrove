@@ -76,7 +76,7 @@ def load_artifacts():
     if not le_path.exists():
         raise FileNotFoundError(f"Label encoder not found: {le_path}")
 
-    model = load_model(str(model_path))
+    model = load_model(str(model_path), compile=False)
     with open(scaler_path, "rb") as f:
         scaler = pickle.load(f)
     with open(le_path, "rb") as f:
