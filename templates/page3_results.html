@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Ekstraksi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .results-container {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .prediction-card {
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        .confidence-badge {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+        }
+        .feature-table th {
+            background-color: #f8f9fa;
+        }
+        .alert-not-detected {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .button-group .btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container results-container">
+        <h1 class="mb-4 text-center">HASIL ANALISIS</h1>
+        
+        <div class="text-center mb-4">
+            <img src="{{ image_url }}" class="preview-image" alt="Preview Gambar">
+        </div>
+        
+        {% if prediction == "Tidak Terdeteksi" %}
+        <div class="alert alert-warning alert-not-detected text-center">
+            <h4 class="alert-heading">Tidak Terdeteksi</h4>
+            <p class="mb-0">{{ error }}</p>
+            <p class="mb-0">Silakan coba dengan gambar daun mangrove yang lebih jelas.</p>
+        </div>
+        {% else %}
+        <div class="card prediction-card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">Hasil Identifikasi</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <h4>Jenis Mangrove:</h4>
+                        <p class="display-6">{{ prediction }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Tingkat Akurasi:</h4>
+                        <span class="badge bg-success confidence-badge">{{ (confidence * 100)|round(2) }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h3 class="card-title mb-0">Fitur yang Diekstraksi</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped feature-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Fitur</th>
+                                <th>Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feature in features %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ feature.name }}</td>
+                                <td>{{ feature.value|round(4) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="text-center mt-4">
+            <div class="button-group">
+                <a href="/" class="btn btn-secondary btn-lg">Kembali ke Halaman</a>
+                <a href="/detect" class="btn btn-primary btn-lg">Unggah Gambar Baru</a>
+                {% if species_endpoint %}
+                <a href="{{ url_for(species_endpoint) }}" class="btn btn-info btn-lg">Lihat Detail Spesies</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

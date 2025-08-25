@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}Tentang Kami{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-center mb-4" style="color: #2C4001;">Tentang Mangrove</h1>
+    
+    <!-- Bagian Ekosistem Mangrove -->
+    <div class="row mb-5 align-items-center g-4">
+        <div class="col-md-6">
+            <div class="position-relative">
+                <img src="{{ url_for('static', filename='images/daun pohon mangrove.jpeg') }}" 
+                     alt="Ekosistem Mangrove" 
+                     class="img-fluid rounded-3 shadow-lg w-100"
+                     style="border: 2px solid #434736;">
+                <div class="position-absolute bottom-0 start-0 p-3 rounded-end-3" style="background-color: #365902;">
+                    <small class="fw-semibold text-white">Ekosistem Pesisir Indonesia</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ps-md-4">
+                <h3 class="fw-bold mb-3" style="color: #2C4001;">Ekosistem Mangrove</h3>
+                <div class="border-start border-3 ps-3" style="border-color: #365902 !important;">
+                    <p class="mb-3" style="color: #3C4030;">
+                        Mangrove merupakan komunitas tumbuhan pantai yang memiliki ketahanan tinggi terhadap kadar garam 
+                        dan membentuk ekosistem khas di wilayah pesisir tropis dan subtropis.
+                    </p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 d-flex">
+                            <span class="me-2" style="color: #365902;">•</span>
+                            <span style="color: #3C4030;">Berfungsi sebagai habitat penting bagi biota laut dalam siklus hidupnya</span>
+                        </li>
+                        <li class="mb-2 d-flex">
+                            <span class="me-2" style="color: #365902;">•</span>
+                            <span style="color: #3C4030;">Memiliki sistem perakaran kompleks yang menstabilkan sedimentasi pantai</span>
+                        </li>
+                        <li class="d-flex">
+                            <span class="me-2" style="color: #365902;">•</span>
+                            <span style="color: #3C4030;">Berperan sebagai filter alami polutan dan penyerap karbon dioksida</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bagian Daun Mangrove -->
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-6 order-md-2">
+            <img src="{{ url_for('static', filename='images/daun mangrove.jpeg') }}" 
+                 alt="Daun Mangrove" 
+                 class="img-fluid rounded shadow-lg"
+                 style="border: 2px solid #434736;">
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h3 class="mb-4" style="color: #2C4001;">Ciri Khas Daun Mangrove</h3>
+            <div class="card border-0 shadow-sm" style="border: 1px solid #3C4030 !important;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item py-3">
+                        <h5 class="fw-bold mb-2" style="color: #365902;">Bentuk Daun</h5>
+                        <ul class="mb-0 ps-3" style="color: #3C4030;">
+                            <li>Umumnya lonjong/elips dengan ujung runcing (adaptasi mengalirkan garam)</li>
+                            <li>Beberapa spesies bulat tebal (<em>Sonneratia</em>) atau kecil (<em>Lumnitzera</em>)</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item py-3">
+                        <h5 class="fw-bold mb-2" style="color: #365902;">Warna Daun</h5>
+                        <ul class="mb-0 ps-3" style="color: #3C4030;">
+                            <li>Dominan hijau tua (permukaan atas)</li>
+                            <li>Bagian bawah lebih pucat/kekuningan (akumulasi garam)</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item py-3">
+                        <h5 class="fw-bold mb-2" style="color: #365902;">Tekstur Daun</h5>
+                        <ul class="mb-0 ps-3" style="color: #3C4030;">
+                            <li>Tebal dan berdaging (sukulen) untuk menyimpan air</li>
+                            <li>Permukaan licin/berkulit untuk mengurangi penguapan</li>
+                            <li>Beberapa spesies berbulu halus atau kasar</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bagian Jenis-Jenis Mangrove -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-center mb-3" style="color: #2C4001;">Jenis-Jenis Mangrove</h3>
+            <p class="text-center mb-4" style="color: #434736;">
+                <i class="bi bi-arrow-left-circle-fill me-2" style="color: #434736;"></i>
+                Geser untuk melihat lebih banyak jenis
+                <i class="bi bi-arrow-right-circle-fill ms-2" style="color: #434736;"></i>
+            </p>
+        </div>
+        
+        <div class="col-12 position-relative">
+            <!-- Scroll Indicator Left -->
+            <div class="scroll-indicator left-indicator d-none d-md-flex">
+                <i class="bi bi-chevron-left fs-4 text-white"></i>
+            </div>
+            
+            <div class="horizontal-scroll-wrapper">
+                <div class="d-flex flex-nowrap overflow-auto pb-4 scroll-content">
+                    <!-- Card 1 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('avicennia_marina') }}'">
+                        <img src="{{ url_for('static', filename='images/daun am.jpg') }}"
+                             class="card-img-top" 
+                             alt="Daun Avicennia Marina">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Avicennia Marina</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Bulat telur, ujung tumpul</li>
+                                <li>Warna: Hijau keabu-abuan</li>
+                                <li>Tekstur: Sukulen dengan bintik garam</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('bruguiera_detail') }}'">
+                        <img src="{{ url_for('static', filename='images/daun bg.jpg') }}" 
+                             class="card-img-top" 
+                             alt="Daun Bruguiera Gymnorhiza">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Bruguiera Gymnorhiza</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Elips lancip</li>
+                                <li>Warna: Hijau tua mengilap</li>
+                                <li>Tekstur: Kaku seperti kulit</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('heritiera_littoralis') }}'">
+                        <img src="{{ url_for('static', filename='images/daun hl.jpg') }}" 
+                             class="card-img-top" 
+                             alt="Daun Heritiera Littoralis">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Heritiera Littoralis</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Lonjong dengan ujung runcing</li>
+                                <li>Warna: Hijau metalik</li>
+                                <li>Tekstur: Kertas tipis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('avicennia_officinalis') }}'">
+                        <img src="{{ url_for('static', filename='images/daun ao.jpg') }}" 
+                             class="card-img-top" 
+                             alt="Daun Avicennia Officinalis">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Avicennia Officinalis</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Lonjong lebar</li>
+                                <li>Warna: Hijau kekuningan</li>
+                                <li>Tekstur: Sukulen, permukaan kasar</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('lumnitzera_littorea') }}'">
+                        <img src="{{ url_for('static', filename='images/daun lt.jpg') }}" 
+                             class="card-img-top" 
+                             alt="Daun Lumnitzera Littorea">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Lumnitzera Littorea</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Bulat kecil</li>
+                                <li>Warna: Hijau tua</li>
+                                <li>Tekstur: Keras dan tebal</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 6 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('rhizophora_apiculata') }}'">
+                        <img src="{{ url_for('static', filename='images/daun ra.jpg') }}" 
+                             class="card-img-top" 
+                             alt="Daun Rhizophora Apiculata">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Rhizophora Apiculata</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Elips meruncing</li>
+                                <li>Warna: Hijau tua</li>
+                                <li>Tekstur: Licin dan kaku</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="card mx-3" style="min-width: 300px; cursor: pointer; border: 1px solid #3C4030;" 
+                    onclick="window.location.href='{{ url_for('sonneratia_alba') }}'">
+                        <img src="{{ url_for('static', filename='images/daun sa.jpg') }}" 
+                             class="card-img-top" 
+                             alt="Daun Sonneratia alba">
+                        <div class="card-body">
+                            <h5 style="color: #2C4001;">Sonneratia Alba</h5>
+                            <ul class="ps-3" style="color: #3C4030;">
+                                <li>Bentuk: Bulat tebal</li>
+                                <li>Warna: Hijau muda</li>
+                                <li>Tekstur: Berdaging sukulen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator Right -->
+            <div class="scroll-indicator right-indicator d-none d-md-flex">
+                <i class="bi bi-chevron-right fs-4 text-white"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Scroll Indicators */
+    .scroll-indicator {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: #365902;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.2s ease;
+        border: 2px solid white;
+    }
+    
+    .scroll-indicator:hover {
+        background: #2C4001;
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .scroll-indicator:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+    
+    .left-indicator {
+        left: -20px;
+    }
+    
+    .right-indicator {
+        right: -20px;
+    }
+    
+    /* Horizontal Scroll */
+    .horizontal-scroll-wrapper {
+        position: relative;
+    }
+    
+    .scroll-content {
+        scrollbar-width: thin;
+        scrollbar-color: #365902 #f1f1f1;
+    }
+    
+    .scroll-content::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .scroll-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .scroll-content::-webkit-scrollbar-thumb {
+        background-color: #365902;
+        border-radius: 10px;
+    }
+    
+    /* Card Hover Effect */
+    .card {
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(54, 89, 2, 0.2) !important;
+    }
+    
+    @media (max-width: 768px) {
+        .scroll-indicator {
+            width: 36px;
+            height: 36px;
+        }
+        .left-indicator {
+            left: -15px;
+        }
+        .right-indicator {
+            right: -15px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const scrollContainer = document.querySelector('.scroll-content');
+        const leftIndicator = document.querySelector('.left-indicator');
+        const rightIndicator = document.querySelector('.right-indicator');
+        
+        if (scrollContainer && leftIndicator && rightIndicator) {
+            leftIndicator.addEventListener('click', () => {
+                scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            rightIndicator.addEventListener('click', () => {
+                scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        }
+    });
+</script>
+{% endblock %}

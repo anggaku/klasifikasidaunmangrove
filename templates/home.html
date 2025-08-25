@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="background-color: #f8f9fa;">
+    <!-- Hero Section -->
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold mb-4" style="color: #2C4001;">Sistem Klasifikasi Daun Mangrove</h1>
+            <p class="lead mb-4" style="color: #3C4030;">Sistem canggih untuk klasifikasi daun mangrove menggunakan teknologi machine learning.</p>
+            <div class="d-flex gap-3">
+                <a href="/detect" class="btn btn-lg px-4" style="background-color: #365902; border-color: #2C4001; color: white; font-weight: 500;">Mulai Deteksi</a>
+                <a href="/about" class="btn btn-outline-secondary btn-lg px-4" style="border-color: #434736; color: #434736; font-weight: 500;">Pelajari Lebih Lanjut</a>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-lg-0">
+            <div class="position-relative">
+                <img src="{{ url_for('static', filename='images/hutan mangrove.jpg') }}" 
+                     alt="Hutan Mangrove" 
+                     class="img-fluid rounded shadow-lg" 
+                     style="max-height: 400px; width: 100%; object-fit: cover; border: 2px solid #434736; box-shadow: 0 4px 12px rgba(44, 64, 1, 0.15);">
+            </div>
+        </div>
+    </div>
+
+    <!-- News Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold" style="color: #2C4001;">Aksi Terkini Pelestarian Mangrove</h2>
+            <p class="mb-4" style="color: #3C4030;">Kegiatan terbaru rehabilitasi mangrove di Indonesia</p>
+        </div>
+        
+        <div class="col-12">
+            <div class="news-scroller">
+                <!-- Berita 1 -->
+                <div class="news-item">
+                    <div class="card h-100 border-0 shadow-sm news-card" style="border: 1px solid #3C4030;">
+                        <a href="https://www.kemenlh.go.id/news/detail/hari-bumi-2025-klhbplh-gaungkan-aksi-kolektif-selamatkan-mangrove-indonesia" target="_blank" class="text-decoration-none">
+                            <img src="https://www.kemenlh.go.id/dashboard/public/storage/news-activities/ia4dQ6FBMfozH3DP35dqXBgrSAlV78cVmDXSajw0.jpg" 
+                                 class="card-img-top" 
+                                 alt="Aksi Kolektif Selamatkan Mangrove" 
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                            <div class="card-body">
+                                <div class="badge mb-2" style="background-color: #365902; color: white;">Hari Bumi 2025</div>
+                                <h5 class="card-title" style="color: #2C4001;">Aksi Kolektif Selamatkan Mangrove</h5>
+                                <p class="card-text" style="color: #3C4030;">KLHBPLH gaungkan gerakan nasional penyelamatan ekosistem mangrove</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: #434736;">KemenLHK</small>
+                                    <span style="color: #365902; font-weight: 500;">Baca →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Berita 2 -->
+                <div class="news-item">
+                    <div class="card h-100 border-0 shadow-sm news-card" style="border: 1px solid #3C4030;">
+                        <a href="https://dlh.bulelengkab.go.id/informasi/detail/berita/40_penanaman-mangrove" target="_blank" class="text-decoration-none">
+                            <img src="https://dlh.bulelengkab.go.id/uploads/konten/40_penanaman-mangrove.jpg" 
+                                 class="card-img-top" 
+                                 alt="Penanaman Mangrove Buleleng" 
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://images.pexels.com/photos/259772/pexels-photo-259772.jpeg?auto=compress&cs=tinysrgb&w=800'">
+                            <div class="card-body">
+                                <div class="badge mb-2" style="background-color: #2C4001; color: white;">Aksi Lokal</div>
+                                <h5 class="card-title" style="color: #2C4001;">Penanaman Mangrove di Buleleng</h5>
+                                <p class="card-text" style="color: #3C4030;">DLH Kabupaten Buleleng lakukan rehabilitasi mangrove pesisir</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: #434736;">DLH Buleleng</small>
+                                    <span style="color: #365902; font-weight: 500;">Baca →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Berita 3 -->
+                <div class="news-item">
+                    <div class="card h-100 border-0 shadow-sm news-card" style="border: 1px solid #3C4030;">
+                        <a href="https://lldikti5.kemdikbud.go.id/home/detailpost/pmk-dan-hmtk-ity-lakukan-aksi-penanaman-mangrove-dalam-rangka-hari-lingkungan-hidup" target="_blank" class="text-decoration-none">
+                            <img src="https://lldikti5.kemdikbud.go.id/assets/images/posts/medium/tn_lldikti5_20250620183120.jpg" 
+                                 class="card-img-top" 
+                                 alt="Aksi Penanaman Mahasiswa" 
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1587135991058-8816a1a7e7ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                            <div class="card-body">
+                                <div class="badge mb-2" style="background-color: #434736; color: white;">Gerakan Mahasiswa</div>
+                                <h5 class="card-title" style="color: #2C4001;">Penanaman Mangrove oleh Mahasiswa</h5>
+                                <p class="card-text" style="color: #3C4030;">PMK dan HMTK ITY lakukan aksi penanaman dalam rangka Hari Lingkungan Hidup</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: #434736;">LLDIKTI V</small>
+                                    <span style="color: #365902; font-weight: 500;">Baca →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Berita 4 -->
+                <div class="news-item">
+                    <div class="card h-100 border-0 shadow-sm news-card" style="border: 1px solid #3C4030;">
+                        <a href="https://pekalongankota.go.id/berita/aksi-serentak-peringatan-hari-lingkungan-hidup-sedunia-2025-kota-pekalongan-tanam-ribuan-bibit-mangrove-.html" target="_blank" class="text-decoration-none">
+                            <img src="https://pekalongankota.go.id/upload/berita/berita_20250605023633.jpeg" 
+                                 class="card-img-top" 
+                                 alt="Penanaman Mangrove Pekalongan" 
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                            <div class="card-body">
+                                <div class="badge mb-2" style="background-color: #3C4030; color: white;">Aksi Serentak</div>
+                                <h5 class="card-title" style="color: #2C4001;">Ribuan Bibit Mangrove di Pekalongan</h5>
+                                <p class="card-text" style="color: #3C4030;">Peringatan Hari Lingkungan Hidup Sedunia 2025 dengan penanaman massal</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: #434736;">Pemkot Pekalongan</small>
+                                    <span style="color: #365902; font-weight: 500;">Baca →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Berita 5 -->
+                <div class="news-item">
+                    <div class="card h-100 border-0 shadow-sm news-card" style="border: 1px solid #3C4030;">
+                        <a href="https://prokopim.bengkaliskab.go.id/web/detailberita/16788/sempena-hari-lingkungan-hidup-sedunia-tahun-2025,-pt-kpi-ru-ii-sungai-pakning-gelar-bersih-bersih" target="_blank" class="text-decoration-none">
+                            <img src="https://prokopim.bengkaliskab.go.id/gambar/images/IMG-20250621-WA0011.jpg" 
+                                 class="card-img-top" 
+                                 alt="Aksi Bersih-bersih Mangrove" 
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                            <div class="card-body">
+                                <div class="badge mb-2" style="background-color: #262920; color: white;">Aksi Bersih-bersih</div>
+                                <h5 class="card-title" style="color: #2C4001;">Bersih-bersih Kawasan Mangrove</h5>
+                                <p class="card-text" style="color: #3C4030;">PT KPI RU II Sungai Pakning gelar aksi bersih-bersih sempena Hari Lingkungan Hidup</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: #434736;">Bengkalis</small>
+                                    <span style="color: #365902; font-weight: 500;">Baca →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .container {
+        max-width: 1200px;
+    }
+    
+    .news-card {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 0 12px;
+        width: 300px;
+        background-color: white;
+    }
+    
+    .news-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(54, 89, 2, 0.15) !important;
+    }
+    
+    .news-card:hover .card-title {
+        color: #365902 !important;
+    }
+    
+    .news-card .badge {
+        font-size: 0.75rem;
+        padding: 5px 12px;
+        border-radius: 4px;
+        letter-spacing: 0.5px;
+    }
+    
+    .news-scroller {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 24px;
+        padding: 20px 12px;
+        scrollbar-width: thin;
+        scrollbar-color: #365902 #f1f1f1;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .news-scroller::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .news-scroller::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+        margin: 0 20px;
+    }
+    
+    .news-scroller::-webkit-scrollbar-thumb {
+        background-color: #365902;
+        border-radius: 10px;
+        transition: background-color 0.3s;
+    }
+    
+    .news-scroller::-webkit-scrollbar-thumb:hover {
+        background-color: #2C4001;
+    }
+    
+    .news-item {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+    }
+    
+    .btn {
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 992px) {
+        .display-4 {
+            font-size: 2.5rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .news-card {
+            width: 280px;
+        }
+        
+        .news-scroller {
+            gap: 16px;
+            padding: 16px 8px;
+        }
+        
+        .display-4 {
+            font-size: 2rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .d-flex.gap-3 {
+            flex-direction: column;
+            gap: 12px !important;
+        }
+        
+        .btn-lg {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

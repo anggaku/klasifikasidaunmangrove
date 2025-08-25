@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Avicennia officinalis | Mangrove Identification{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('about') }}" style="color: #365902;">Tentang Mangrove</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Avicennia officinalis</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 style="color: #2C4001;">Avicennia officinalis</h1>
+            <h4 class="mt-3" style="color: #434736;">
+                <i class="bi bi-tags-fill feature-icon"></i>Nama setempat: {{ species.nama_lokal|join(', ') }}
+            </h4>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="card h-100 shadow-sm animated-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-tree-fill feature-icon"></i>
+                        <h3 class="card-title mb-0" style="color: #2C4001;">Deskripsi Umum</h3>
+                    </div>
+                    <p class="card-text">{{ species.deskripsi_umum }}</p>
+                    <div class="mt-4">
+                        <h5><i class="bi bi-info-circle-fill me-2 text-primary"></i>Karakteristik Khusus:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="bi bi-check-circle-fill mt-1 me-2 text-primary"></i>
+                                <span>Akar tunjang dan akar nafas berbentuk jari dengan lentisel</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="bi bi-check-circle-fill mt-1 me-2 text-primary"></i>
+                                <span>Kulit kayu halus berwarna hijau-keabu-abuan</span>
+                            </li>
+                            <li class="d-flex align-items-start">
+                                <i class="bi bi-check-circle-fill mt-1 me-2 text-primary"></i>
+                                <span>Tinggi mencapai 12-20 meter</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm animated-card delay-1">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-leaf-fill feature-icon"></i>
+                        <h3 class="card-title mb-0" style="color: #2C4001;">Ciri-ciri Daun</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="bi bi-shapes me-2 text-primary"></i>
+                            <strong>Bentuk:</strong> {{ species.daun.bentuk }}
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-rulers me-2 text-primary"></i>
+                            <strong>Ukuran:</strong> {{ species.daun.ukuran }}
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-palette-fill me-2 text-primary"></i>
+                            <strong>Warna:</strong> Hijau tua (atas), Hijau-kekuningan/abu-abu kehijauan (bawah)
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-dot me-2 text-primary"></i>
+                            <strong>Permukaan:</strong> Bintik kelenjar cekung di bagian atas
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-layout-three-columns me-2 text-primary"></i>
+                            <strong>Letak:</strong> {{ species.daun.unit_letak }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm animated-card delay-2">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt-fill feature-icon"></i>
+                        <h3 class="card-title mb-0" style="color: #2C4001;">Penyebaran di Indonesia</h3>
+                    </div>
+                    <div class="map-container">
+                        <div id="map"></div>
+                        <div class="loading" id="loading">
+                            <div class="spinner-border" style="color: #365902;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5><i class="bi bi-geo-alt-fill me-2 text-primary"></i>Lokasi Penyebaran:</h5>
+                        <div class="row">
+                            {% for loc in species.penyebaran.lokasi|batch(4) %}
+                            <div class="col-md-3">
+                                {% for item in loc %}
+                                <div class="d-flex align-items-start mb-2">
+                                    <i class="bi bi-check-circle-fill mt-1 me-2 text-primary"></i>
+                                    <span>{{ item }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm animated-card delay-3">
+                <div class="card-header" style="background-color: #365902; color: white;">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-heart-fill me-2"></i>
+                        <h3 class="mb-0">Manfaat</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for manfaat in species.manfaat %}
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-check-circle-fill mt-1 me-2 text-primary"></i>
+                                <span>{{ manfaat }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Data koordinat dari Flask
+        const locations = [
+            {% for loc in species.penyebaran.koordinat %}
+            {
+                nama: "{{ loc.nama }}",
+                lat: {{ loc.lat }},
+                lng: {{ loc.lng }}
+            },
+            {% endfor %}
+        ];
+
+        // Inisialisasi peta
+        const map = L.map('map').setView([-2.5489, 118.0149], 5);
+
+        // Tambahkan tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Custom icon marker
+        const greenIcon = L.divIcon({
+            className: 'custom-marker',
+            iconSize: [24, 24]
+        });
+
+        // Tambahkan marker untuk setiap lokasi
+        locations.forEach(loc => {
+            const marker = L.marker([loc.lat, loc.lng], { icon: greenIcon })
+                .addTo(map)
+                .bindPopup(`
+                    <b style="color: #2C4001;">${loc.nama}</b>
+                    <div style="color: #3C4030; font-size:0.9em;">
+                        <i>Avicennia officinalis</i>
+                    </div>
+                    <div style="font-size:0.8em;color:#434736;margin-top:5px;">
+                        Lat: ${loc.lat.toFixed(4)}<br>
+                        Lng: ${loc.lng.toFixed(4)}
+                    </div>
+                `);
+            
+            // Add hover effect
+            marker.on('mouseover', function() {
+                this.openPopup();
+            });
+        });
+
+        // Sembunyikan loading setelah peta siap
+        document.getElementById('loading').style.display = 'none';
+        
+        // Add zoom animation
+        setTimeout(() => {
+            map.setZoom(5, {animate: true});
+        }, 800);
+    });
+</script>
+
+<style>
+    :root {
+        --primary-dark: #2C4001;
+        --primary: #365902;
+        --secondary: #3C4030;
+        --tertiary: #434736;
+        --darkest: #262920;
+        --light-bg: #f8f9fa;
+    }
+    
+    body {
+        background-color: var(--light-bg);
+        color: var(--secondary);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4, h5, .card-title {
+        font-family: 'Merriweather', serif;
+        font-weight: 700;
+        color: var(--primary-dark);
+        letter-spacing: -0.5px;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--primary);
+        border-radius: 2px;
+    }
+    
+    #map {
+        height: 500px; 
+        width: 100%;
+        border-radius: 12px;
+        z-index: 1;
+        border: 1px solid var(--secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .map-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+    
+    .loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255,255,255,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        border-radius: 12px;
+    }
+    
+    .custom-marker {
+        background-color: var(--primary);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease;
+    }
+    
+    .leaflet-popup-content {
+        min-width: 180px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .leaflet-popup-content b {
+        color: var(--primary-dark);
+        font-weight: 600;
+    }
+    
+    .card {
+        border: 1px solid rgba(60, 64, 48, 0.15);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(44, 64, 1, 0.15) !important;
+        border-color: rgba(60, 64, 48, 0.3);
+    }
+    
+    .card-header {
+        background-color: var(--primary) !important;
+        border-bottom: none;
+        padding: 1.25rem;
+        font-family: 'Merriweather', serif;
+    }
+    
+    .breadcrumb {
+        background-color: rgba(54, 89, 2, 0.1);
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .breadcrumb-item a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    
+    .breadcrumb-item a:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
+    }
+    
+    .breadcrumb-item.active {
+        color: var(--tertiary);
+        font-weight: 500;
+    }
+    
+    .list-group-item {
+        border-color: rgba(60, 64, 48, 0.1);
+        padding: 1rem 1.25rem;
+        transition: background-color 0.2s;
+    }
+    
+    .list-group-item:hover {
+        background-color: rgba(54, 89, 2, 0.05);
+    }
+    
+    .text-success {
+        color: var(--primary) !important;
+    }
+    
+    .btn-success {
+        background-color: var(--primary);
+        border-color: var(--primary-dark);
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    
+    .btn-outline-success {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+    
+    .spinner-border.text-success {
+        color: var(--primary) !important;
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .shadow-sm {
+        box-shadow: 0 4px 12px rgba(44, 64, 1, 0.1) !important;
+    }
+    
+    .species-feature {
+        margin-bottom: 2rem;
+    }
+    
+    .feature-icon {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-right: 0.75rem;
+    }
+    
+    .text-primary {
+        color: var(--primary) !important;
+    }
+    
+    @media (max-width: 992px) {
+        h1 {
+            font-size: 2.2rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem;
+        }
+        
+        #map {
+            height: 400px;
+        }
+        
+        .card {
+            margin-bottom: 1.5rem;
+        }
+    }
+    
+    /* Animation for cards when loading */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animated-card {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .delay-1 {
+        animation-delay: 0.2s;
+    }
+    
+    .delay-2 {
+        animation-delay: 0.4s;
+    }
+    
+    .delay-3 {
+        animation-delay: 0.6s;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Pertanyaan Umum{% endblock %}
+
+{% block content %}
+<div class="py-4">
+    <h1 class="text-center mb-4" style="color: #2C4001;">Pertanyaan yang Sering Diajukan</h1>
+    
+    <div class="accordion" id="faqAccordion" style="max-width: 800px; margin: 0 auto;">
+        <!-- Pertanyaan 1 -->
+        <div class="accordion-item mb-3" style="border: 1px solid #3C4030; border-radius: 8px !important;">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" 
+                        aria-expanded="true" aria-controls="collapseOne"
+                        style="background-color: #365902; color: white; border-radius: 7px 7px 0 0 !important;">
+                    Apa itu sistem deteksi daun ini?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" 
+                 data-bs-parent="#faqAccordion"
+                 style="background-color: #f8f9fa;">
+                <div class="accordion-body" style="color: #3C4030;">
+                    Sistem deteksi daun kami dirancang untuk mengidentifikasi dan mengklasifikasikan jenis daun menggunakan teknik pengolahan gambar dan machine learning yang canggih.
+                </div>
+            </div>
+        </div>
+    
+        
+        <!-- Pertanyaan 3 -->
+        <div class="accordion-item mb-3" style="border: 1px solid #3C4030; border-radius: 8px !important;">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+                        style="background-color: #365902; color: white;">
+                    Jenis daun apa saja yang bisa diidentifikasi sistem ini?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" 
+                 data-bs-parent="#faqAccordion"
+                 style="background-color: #f8f9fa;">
+                <div class="accordion-body" style="color: #3C4030;">
+                    Sistem dapat mengidentifikasi 7 spesies daun Avicennia marina, Avicennia officinalis, Bruguiera 
+                    gymnorhiza, Heritiera littoralis, Lumnitzera littorea, Rhizophora apiculata, dan Sonneratia alba. Daftar lengkap tersedia di dokumentasi kami.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pertanyaan 4 -->
+        <div class="accordion-item mb-3" style="border: 1px solid #3C4030; border-radius: 8px !important;">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"
+                        style="background-color: #365902; color: white;">
+                    Bagaimana cara menggunakan sistem ini?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" 
+                 data-bs-parent="#faqAccordion"
+                 style="background-color: #f8f9fa;">
+                <div class="accordion-body" style="color: #3C4030;">
+                    Cukup unggah gambar daun yang jelas melalui antarmuka web kami, dan sistem akan memprosesnya serta memberikan hasil identifikasi dalam hitungan detik.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pertanyaan 5 -->
+        <div class="accordion-item mb-3" style="border: 1px solid #3C4030; border-radius: 8px !important;">
+            <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive"
+                        style="background-color: #365902; color: white;">
+                    Apakah tersedia aplikasi mobile?
+                </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" 
+                 data-bs-parent="#faqAccordion"
+                 style="background-color: #f8f9fa;">
+                <div class="accordion-body" style="color: #3C4030;">
+                    Saat ini kami hanya menyediakan antarmuka berbasis web, tetapi aplikasi mobile sedang dalam pengembangan dan diharapkan akan dirilis tahun ini.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pertanyaan 7 -->
+        <div class="accordion-item mb-3" style="border: 1px solid #3C4030; border-radius: 8px !important;">
+            <h2 class="accordion-header" id="headingSeven">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven"
+                        style="background-color: #365902; color: white;">
+                    Bagaimana jika sistem tidak bisa mengenali daun saya?
+                </button>
+            </h2>
+            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" 
+                 data-bs-parent="#faqAccordion"
+                 style="background-color: #f8f9fa;">
+                <div class="accordion-body" style="color: #3C4030;">
+                    Jika sistem tidak dapat mengenali daun Anda, pastikan gambar yang diunggah jelas dan daun terlihat utuh. Anda juga bisa mencoba mengambil gambar dari sudut yang berbeda. Jika masih tidak berhasil, daun tersebut mungkin belum ada dalam database kami.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .accordion-button:not(.collapsed) {
+        background-color: #2C4001 !important;
+        color: white !important;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: 0 0 0 0.25rem rgba(54, 89, 2, 0.25);
+        border-color: #365902;
+    }
+    
+    .accordion-button:hover {
+        background-color: #2C4001 !important;
+        color: white !important;
+    }
+    
+    .accordion-button::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+    
+    @media (max-width: 768px) {
+        .accordion {
+            padding: 0 15px;
+        }
+    }
+</style>
+{% endblock %}
